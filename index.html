@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Darlyn ✨</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tipografía Elegante Inter / Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #090514;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        /* Botón Mute estilo minimalista en líneas */
+        .mute-btn {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 50;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(244, 114, 182, 0.6);
+            background: rgba(15, 7, 28, 0.6);
+            backdrop-filter: blur(8px);
+            color: #f472b6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(236, 72, 153, 0.2);
+        }
+
+        .mute-btn:hover {
+            border-color: #f472b6;
+            background: rgba(236, 72, 153, 0.2);
+            box-shadow: 0 0 15px rgba(244, 114, 182, 0.6);
+            transform: scale(1.05);
+        }
+
+        /* Fondo de estrellas canvas */
+        #starsCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Tarjeta Glassmorphism refinada con bordes neón rosa */
+        .glass-card {
+            background: rgba(22, 11, 36, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1.5px solid rgba(244, 114, 182, 0.4);
+            box-shadow: 0 0 30px rgba(236, 72, 153, 0.25), 
+                        inset 0 0 15px rgba(244, 114, 182, 0.15);
+            border-radius: 28px;
+        }
+
+        /* Botón neón idéntico para los enlaces de Instagram */
+        .neon-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px 12px;
+            background: rgba(236, 72, 153, 0.15);
+            border: 1.5px solid rgba(244, 114, 182, 0.8);
+            color: #f472b6;
+            font-weight: 800;
+            border-radius: 12px;
+            text-shadow: 0 0 8px rgba(244, 114, 182, 0.6);
+            box-shadow: 0 0 12px rgba(236, 72, 153, 0.3);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .neon-btn:hover {
+            background: rgba(236, 72, 153, 0.35);
+            border-color: #f472b6;
+            color: #ffffff;
+            box-shadow: 0 0 20px rgba(244, 114, 182, 0.8);
+            transform: translateY(-2px) scale(1.03);
+        }
+
+        /* Marco para el video de YouTube */
+        .video-frame {
+            border: 1.5px solid rgba(244, 114, 182, 0.4);
+            border-radius: 18px;
+            box-shadow: 0 0 20px rgba(236, 72, 153, 0.2);
+            overflow: hidden;
+        }
+
+        /* Estilos de la barra de carga */
+        .progress-track {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(244, 114, 182, 0.3);
+            border-radius: 999px;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #ec4899, #f472b6, #fb7185);
+            border-radius: 999px;
+            box-shadow: 0 0 12px rgba(244, 114, 182, 0.8);
+        }
+
+        /* Botón de acción brillante */
+        .btn-start {
+            background: linear-gradient(135deg, #ec4899, #be185d);
+            border: 1px solid rgba(251, 113, 133, 0.6);
+            box-shadow: 0 0 20px rgba(236, 72, 153, 0.4);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-start:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 0 28px rgba(236, 72, 153, 0.7);
+        }
+
+        /* Frame foto de perfil */
+        .profile-img-frame {
+            border: 2px solid rgba(244, 114, 182, 0.8);
+            box-shadow: 0 0 25px rgba(236, 72, 153, 0.5);
+        }
+
+        /* Borde Rainbow Giratorio hacia la Derecha */
+        .rainbow-container {
+            position: relative;
+            border-radius: 18px;
+            padding: 2.5px;
+            background: linear-gradient(90deg, #ff007f, #ff7700, #ffeb00, #00ff66, #00ffff, #7f00ff, #ff007f);
+            background-size: 300% 300%;
+            animation: rainbowRotate 4s linear infinite;
+        }
+
+        @keyframes rainbowRotate {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        /* Animaciones CSS personalizadas de transición */
+        @keyframes fadeOutZoom {
+            0% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+                filter: blur(0px);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.88) translateY(-20px);
+                filter: blur(8px);
+            }
+        }
+
+        @keyframes fadeInZoom {
+            0% {
+                opacity: 0;
+                transform: scale(0.88) translateY(20px);
+                filter: blur(8px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+                filter: blur(0px);
+            }
+        }
+
+        .panel-exit {
+            animation: fadeOutZoom 0.45s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .panel-enter {
+            animation: fadeInZoom 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes floatImage {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+
+        .profile-img-animated {
+            animation: floatImage 3.5s ease-in-out infinite;
+        }
+
+        /* Botón de NO escurridizo */
+        #btnNo {
+            transition: all 0.25s ease-out;
+        }
+
+        /* Botón de SÍ dinámico */
+        #btnSi {
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4 sm:p-6 relative overflow-y-auto">
+
+    <!-- Botón de Silencio Minimalista de Líneas (Arriba a la Derecha) -->
+    <button id="muteToggleBtn" onclick="toggleMute()" class="mute-btn" title="Silenciar / Activar sonido">
+        <i id="muteIcon" class="fa-solid fa-volume-high text-sm"></i>
+    </button>
+
+    <!-- Canvas para el fondo animado de estrellas -->
+    <canvas id="starsCanvas"></canvas>
+
+    <!-- Panel 0: Inicio -->
+    <main id="panel0" class="relative z-10 max-w-sm w-full px-2">
+        <div class="glass-card p-5 sm:p-6 text-center transition-all duration-500">
+            
+            <!-- Título Principal -->
+            <h1 class="text-xs sm:text-sm font-bold leading-relaxed mb-4 text-slate-100 tracking-wide flex flex-wrap items-center justify-center gap-1.5">
+                <span>✨ HOLA</span> 
+                <a href="https://www.instagram.com/darlyn91557?cplk=dzV2MTN2aWRmbXAz" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   class="neon-btn text-xs sm:text-sm">
+                    DARLYN
+                </a> 
+                <span>ESTO ES PARA TI ECHO POR</span> 
+                <a href="https://www.instagram.com/yeison.ae?xtok=MWI3bGVrNGRoY3IxYg%3D%3D&utm_source=qr" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   class="neon-btn text-xs sm:text-sm">
+                    YEISON.AE
+                </a>
+            </h1>
+
+            <!-- Sección de Música (YouTube Embed) -->
+            <div class="mb-5">
+                <div class="inline-flex items-center gap-2 mb-3 text-pink-300 font-medium text-xs tracking-wider bg-pink-950/40 px-3.5 py-1.5 rounded-full border border-pink-500/30">
+                    <i class="fa-solid fa-music animate-pulse text-pink-400 text-xs"></i>
+                    <span>Una canción especial para ti</span>
+                </div>
+                
+                <!-- Marco del Video -->
+                <div class="w-full mx-auto">
+                    <div class="video-frame relative w-full overflow-hidden" style="padding-top: 54%;">
+                        <iframe 
+                            id="youtubeIframe"
+                            class="absolute top-0 left-0 w-full h-full"
+                            src="https://www.youtube.com/embed/ZFWpzlsGUnc?enablejsapi=1&autoplay=0&rel=0" 
+                            title="Video de YouTube" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Barra de carga inicial de 3 segundos -->
+            <div class="min-h-[60px] flex flex-col justify-center items-center">
+                <div id="loadingContainer0" class="w-full transition-opacity duration-300">
+                    <div class="flex justify-between items-center mb-1.5 px-1">
+                        <span class="text-xs font-medium text-pink-200/80 tracking-wide flex items-center gap-1.5">
+                            <i class="fa-solid fa-wand-magic-sparkles animate-spin text-pink-400 text-xs"></i> Cargando detalles...
+                        </span>
+                        <span id="percentageText0" class="text-xs font-semibold text-pink-400">0%</span>
+                    </div>
+                    <div class="progress-track w-full h-2.5 p-0.5 overflow-hidden">
+                        <div id="progressBar0" class="progress-fill h-full w-0 transition-all duration-75"></div>
+                    </div>
+                </div>
+
+                <div id="buttonContainer0" class="hidden w-full">
+                    <button id="startBtn" onclick="startJourney()" class="btn-start w-full py-3 px-6 text-white font-semibold text-sm tracking-widest uppercase flex items-center justify-center gap-2 cursor-pointer">
+                        <span>EMPEZAR</span>
+                        <i class="fa-solid fa-heart text-pink-200 text-xs animate-pulse"></i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Panel Intermedio: Carga Conectando a la red (5 segundos) -->
+    <main id="panelConnect" class="relative z-10 max-w-sm w-full px-2 hidden">
+        <div class="glass-card p-6 sm:p-7 text-center">
+            
+            <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center rounded-full bg-pink-950/60 border border-pink-500/40 text-pink-400 text-2xl shadow-lg shadow-pink-500/20">
+                <i class="fa-solid fa-wifi animate-pulse"></i>
+            </div>
+
+            <h2 class="text-base sm:text-lg font-bold text-pink-300 mb-2 tracking-wide">
+                Conectando a la red... 📶
+            </h2>
+
+            <p class="text-xs text-slate-300 mb-5">
+                Estableciendo conexión segura para mostrar detalles especiales
+            </p>
+
+            <div class="w-full">
+                <div class="flex justify-between items-center mb-1.5 px-1">
+                    <span class="text-xs font-medium text-pink-200/80 tracking-wide flex items-center gap-1.5">
+                        <i class="fa-solid fa-spinner animate-spin text-pink-400 text-xs"></i> Por favor espera...
+                    </span>
+                    <span id="percentageTextConnect" class="text-xs font-semibold text-pink-400">0%</span>
+                </div>
+                <div class="progress-track w-full h-2.5 p-0.5 overflow-hidden">
+                    <div id="progressBarConnect" class="progress-fill h-full w-0 transition-all duration-75"></div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Panel 1: Lo que me gusta de ti (1/4) -->
+    <main id="panel1" class="relative z-10 max-w-sm w-full px-2 hidden">
+        <div class="glass-card p-6 sm:p-7 text-center">
+            
+            <div class="inline-block bg-pink-900/50 text-pink-300 text-xs font-semibold px-3 py-1 rounded-full border border-pink-500/40 mb-4 tracking-widest">
+                PANEL 1 / 4
+            </div>
+
+            <!-- Imagen de Perfil 1 -->
+            <div class="relative w-28 h-28 mx-auto mb-4 profile-img-animated">
+                <img 
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSa09JVMlrQ1Tkmy8SynzdGVtPfqrFtnDCkCu3waWIf8g&s=10" 
+                    alt="Darlyn" 
+                    class="w-full h-full object-cover rounded-full profile-img-frame"
+                    onerror="this.src='https://placehold.co/150x150/ff1493/ffffff?text=Darlyn'"
+                >
+            </div>
+
+            <h2 class="text-lg sm:text-xl font-extrabold text-pink-300 mb-3 tracking-wide">
+                Lo que me gusta de ti ✨
+            </h2>
+
+            <p class="text-slate-200 text-sm leading-relaxed mb-6 font-normal bg-pink-950/20 p-4 rounded-2xl border border-pink-500/20 shadow-inner">
+                Hola Darlin espero estés bien y quería decirte que la verdad lo que más me gusta de ti es todo me caes bien me gusta cuando nos hablamos y me gusta también esos ojos hermosos que tienes ❤️
+            </p>
+
+            <!-- Barra de Carga de 2 segundos para Panel 1 -->
+            <div class="min-h-[50px] flex flex-col justify-center items-center">
+                <div id="loadingContainer1" class="w-full transition-opacity duration-300">
+                    <div class="flex justify-between items-center mb-1.5 px-1">
+                        <span class="text-xs font-medium text-pink-200/80 tracking-wide flex items-center gap-1.5">
+                            <i class="fa-solid fa-heart animate-bounce text-pink-400 text-xs"></i> Un momento...
+                        </span>
+                        <span id="percentageText1" class="text-xs font-semibold text-pink-400">0%</span>
+                    </div>
+                    <div class="progress-track w-full h-2.5 p-0.5 overflow-hidden">
+                        <div id="progressBar1" class="progress-fill h-full w-0 transition-all duration-75"></div>
+                    </div>
+                </div>
+
+                <div id="buttonContainer1" class="hidden w-full">
+                    <button onclick="switchPanels(1, 2)" class="btn-start w-full py-3 px-6 text-white font-semibold text-sm tracking-widest uppercase flex items-center justify-center gap-2 cursor-pointer">
+                        <span>Siguiente</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Panel 2: Lo que no me gusta de ti (2/4) -->
+    <main id="panel2" class="relative z-10 max-w-sm w-full px-2 hidden">
+        <div class="glass-card p-6 sm:p-7 text-center">
+            
+            <div class="inline-block bg-pink-900/50 text-pink-300 text-xs font-semibold px-3 py-1 rounded-full border border-pink-500/40 mb-4 tracking-widest">
+                PANEL 2 / 4
+            </div>
+
+            <!-- Imagen de Perfil 2 -->
+            <div class="relative w-28 h-28 mx-auto mb-4 profile-img-animated">
+                <img 
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSS5uBvvwRHb9qazLN-zyELqVlvZQQKQds7REi1IOGueA&s" 
+                    alt="Darlyn" 
+                    class="w-full h-full object-cover rounded-full profile-img-frame"
+                    onerror="this.src='https://placehold.co/150x150/ff69b4/ffffff?text=Darlyn'"
+                >
+            </div>
+
+            <h2 class="text-lg sm:text-xl font-extrabold text-pink-300 mb-3 tracking-wide">
+                Lo que no me gusta de ti 💖
+            </h2>
+
+            <p class="text-slate-200 text-sm leading-relaxed mb-6 font-normal bg-pink-950/20 p-4 rounded-2xl border border-pink-500/20 shadow-inner">
+                Bueno lo que no me gusta de ti es nada la verdad eres y serás la más bonita linda hermosa cariñosa preciosa y dulce niña y la verdad todo me gusta de ti 🥰
+            </p>
+
+            <!-- Barra de Carga de 2 segundos para Panel 2 -->
+            <div class="min-h-[50px] flex flex-col justify-center items-center">
+                <div id="loadingContainer2" class="w-full transition-opacity duration-300">
+                    <div class="flex justify-between items-center mb-1.5 px-1">
+                        <span class="text-xs font-medium text-pink-200/80 tracking-wide flex items-center gap-1.5">
+                            <i class="fa-solid fa-sparkles animate-spin text-pink-400 text-xs"></i> Preparando siguiente...
+                        </span>
+                        <span id="percentageText2" class="text-xs font-semibold text-pink-400">0%</span>
+                    </div>
+                    <div class="progress-track w-full h-2.5 p-0.5 overflow-hidden">
+                        <div id="progressBar2" class="progress-fill h-full w-0 transition-all duration-75"></div>
+                    </div>
+                </div>
+
+                <div id="buttonContainer2" class="hidden w-full">
+                    <button onclick="switchPanels(2, 3)" class="btn-start w-full py-3 px-6 text-white font-semibold text-sm tracking-widest uppercase flex items-center justify-center gap-2 cursor-pointer">
+                        <span>Siguiente</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Panel 3: ¿Y YO COMO TE CAIGO? (3/4) -->
+    <main id="panel3" class="relative z-10 max-w-sm w-full px-2 hidden">
+        <div class="glass-card p-6 sm:p-7 text-center">
+            
+            <div class="inline-block bg-pink-900/50 text-pink-300 text-xs font-semibold px-3 py-1 rounded-full border border-pink-500/40 mb-4 tracking-widest">
+                PANEL 3 / 4
+            </div>
+
+            <!-- Imagen de Perfil 3 -->
+            <div class="relative w-28 h-28 mx-auto mb-4 profile-img-animated">
+                <img 
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8p_zE0MdSp9PaGVGD4pLKcNukKeNcw1GbdGpoVSNV9w&s" 
+                    alt="Darlyn" 
+                    class="w-full h-full object-cover rounded-full profile-img-frame"
+                    onerror="this.src='https://placehold.co/150x150/ec4899/ffffff?text=Darlyn'"
+                >
+            </div>
+
+            <h2 class="text-lg sm:text-xl font-extrabold text-pink-300 mb-2 tracking-wide">
+                ¿Y YO COMO TE CAIGO? 🤔
+            </h2>
+
+            <p class="text-slate-300 text-xs sm:text-sm mb-4">
+                Y ahora es tu turno dime que tal te caigo yo
+            </p>
+
+            <!-- Espacio para escribir con Borde Rainbow Giratorio hacia la derecha -->
+            <div class="rainbow-container mb-6">
+                <textarea 
+                    rows="3" 
+                    placeholder="Escribe aquí tu respuesta bonita..." 
+                    class="w-full p-3 bg-slate-950/90 text-white rounded-2xl text-base sm:text-sm focus:outline-none resize-none border-none placeholder-pink-300/40 focus:ring-2 focus:ring-pink-500/50"
+                    onclick="event.stopPropagation()"
+                    onfocus="event.stopPropagation()"
+                ></textarea>
+            </div>
+
+            <!-- Barra de Carga de 2 segundos para Panel 3 -->
+            <div class="min-h-[50px] flex flex-col justify-center items-center">
+                <div id="loadingContainer3" class="w-full transition-opacity duration-300">
+                    <div class="flex justify-between items-center mb-1.5 px-1">
+                        <span class="text-xs font-medium text-pink-200/80 tracking-wide flex items-center gap-1.5">
+                            <i class="fa-solid fa-pen-fancy animate-pulse text-pink-400 text-xs"></i> Guardando tus pensamientos...
+                        </span>
+                        <span id="percentageText3" class="text-xs font-semibold text-pink-400">0%</span>
+                    </div>
+                    <div class="progress-track w-full h-2.5 p-0.5 overflow-hidden">
+                        <div id="progressBar3" class="progress-fill h-full w-0 transition-all duration-75"></div>
+                    </div>
+                </div>
+
+                <div id="buttonContainer3" class="hidden w-full">
+                    <button onclick="switchPanels(3, 4)" class="btn-start w-full py-3 px-6 text-white font-semibold text-sm tracking-widest uppercase flex items-center justify-center gap-2 cursor-pointer">
+                        <span>Finalizar &amp; Ir al final</span>
+                        <i class="fa-solid fa-heart text-xs"></i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Panel 4: ¿QUISIERAS TU DARLY SER MI NOVIA? (4/4) -->
+    <main id="panel4" class="relative z-10 max-w-sm w-full px-2 hidden">
+        <div class="glass-card p-6 sm:p-7 text-center relative overflow-hidden">
+            
+            <div class="inline-block bg-pink-900/50 text-pink-300 text-xs font-semibold px-3 py-1 rounded-full border border-pink-500/40 mb-4 tracking-widest">
+                PANEL 4 / 4
+            </div>
+
+            <!-- Imagen 4 -->
+            <div class="relative w-28 h-28 mx-auto mb-4 profile-img-animated">
+                <img 
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpBcrQ2RQs_TQAKSKOmKlWVA380PctnVl4QwWAi7iYyQ&s=10" 
+                    alt="Darlyn" 
+                    class="w-full h-full object-cover rounded-full profile-img-frame"
+                    onerror="this.src='https://placehold.co/150x150/f472b6/ffffff?text=Darlyn'"
+                >
+            </div>
+
+            <h2 class="text-lg sm:text-xl font-extrabold text-pink-300 mb-6 tracking-wide leading-snug">
+                ¿QUISIERAS TU DARLY SER MI NOVIA? 💖
+            </h2>
+
+            <!-- Contenedor de Botones SÍ y NO -->
+            <div class="relative min-h-[100px] flex items-center justify-center gap-4 flex-wrap">
+                <button id="btnSi" onclick="selectYes()" class="btn-start w-32 py-3.5 text-white font-black text-base uppercase tracking-wider cursor-pointer z-10 flex items-center justify-center">
+                    ¡SÍ! 💕
+                </button>
+
+                <button id="btnNo" onmouseover="moveNoButton()" onclick="moveNoButton()" class="w-32 py-3.5 bg-slate-800/90 border border-slate-600 text-slate-300 rounded-2xl font-bold text-base hover:bg-slate-700 transition-all cursor-pointer flex items-center justify-center">
+                    NO 🙈
+                </button>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Panel de Carga / Procesando Respuesta -->
+    <main id="panelLoading" class="relative z-10 max-w-sm w-full px-2 hidden">
+        <div class="glass-card p-6 sm:p-7 text-center">
+            
+            <!-- Imagen GIF de Carga / Sorpresa -->
+            <div class="relative w-32 h-32 mx-auto mb-4">
+                <img 
+                    src="https://cdn.pixabay.com/animation/2025/11/11/02/19/02-19-36-889_512.gif" 
+                    alt="Procesando..." 
+                    class="w-full h-full object-cover rounded-2xl border-2 border-pink-400/80 shadow-lg shadow-pink-500/30"
+                    onerror="this.src='https://placehold.co/150x150/ec4899/ffffff?text=Procesando...'"
+                >
+            </div>
+
+            <p class="text-pink-200 font-semibold text-sm leading-relaxed mb-5 bg-pink-950/30 p-3.5 rounded-2xl border border-pink-500/30">
+                Procesando Tu Respuesta Ya Que Me Sorprendió Lo Que Dijiste... 📶✨
+            </p>
+
+            <!-- Barra de Carga de 2 segundos de procesando -->
+            <div class="w-full">
+                <div class="flex justify-between items-center mb-1.5 px-1">
+                    <span class="text-xs font-medium text-pink-200/80 tracking-wide flex items-center gap-1.5">
+                        <i class="fa-solid fa-wifi animate-pulse text-pink-400 text-xs"></i> Conexión lenta...
+                    </span>
+                    <span id="percentageTextLoad" class="text-xs font-semibold text-pink-400">0%</span>
+                </div>
+                <div class="progress-track w-full h-2.5 p-0.5 overflow-hidden">
+                    <div id="progressBarLoad" class="progress-fill h-full w-0 transition-all duration-75"></div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Panel Final de Agradecimiento -->
+    <main id="panelThanks" class="relative z-10 max-w-sm w-full px-2 hidden">
+        <div class="glass-card p-6 sm:p-7 text-center">
+            
+            <!-- Imagen de Agradecimiento -->
+            <div class="relative w-36 h-36 mx-auto mb-4 profile-img-animated">
+                <img 
+                    src="https://c8.alamy.com/comp/2DENYCE/i-love-you-round-sticker-icon-with-heart-symbols-vector-image-2DENYCE.jpg" 
+                    alt="Te Quiero Mucho" 
+                    class="w-full h-full object-cover rounded-full profile-img-frame"
+                    onerror="this.src='https://placehold.co/180x180/ec4899/ffffff?text=❤️+Te+Quiero+❤️'"
+                >
+            </div>
+
+            <h2 class="text-xl sm:text-2xl font-black text-pink-300 mb-3 tracking-wide">
+                TE QUIERO MUCHO HERMOSA ❤️
+            </h2>
+
+            <p class="text-slate-200 text-xs sm:text-sm leading-relaxed mb-6 font-normal bg-pink-950/30 p-4 rounded-2xl border border-pink-500/20 shadow-inner">
+                este sito fue creado desde cero por 
+                <a href="https://www.instagram.com/yeison.ae?xtok=MWI3bGVrNGRoY3IxYg%3D%3D&utm_source=qr" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   class="neon-btn text-xs inline-block my-1">
+                    yeison.ae
+                </a> 
+                y también con buenos términos expresando su amor hacia 
+                <a href="https://www.instagram.com/darlyn91557?cplk=dzV2MTN2aWRmbXAz" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   class="neon-btn text-xs inline-block my-1">
+                    darlyn
+                </a> 
+                la hermosa 🥰✨
+            </p>
+
+            <div class="inline-flex items-center gap-2 text-xs text-pink-400 font-bold bg-pink-900/40 px-4 py-2 rounded-full border border-pink-500/30">
+                <i class="fa-solid fa-sparkles text-pink-300"></i>
+                <span>¡Gracias por todo, Darlyn!</span>
+                <i class="fa-solid fa-sparkles text-pink-300"></i>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Script principal -->
+    <script>
+        let currentInterval = null;
+        let siScale = 1;
+        let isMuted = false;
+
+        // --- FUNCIÓN BOTÓN SILENCIO ---
+        function toggleMute() {
+            const iframe = document.getElementById('youtubeIframe');
+            const icon = document.getElementById('muteIcon');
+            isMuted = !isMuted;
+
+            if (iframe && iframe.contentWindow) {
+                const command = isMuted ? 'mute' : 'unMute';
+                iframe.contentWindow.postMessage(JSON.stringify({
+                    event: 'command',
+                    func: command,
+                    args: []
+                }), '*');
+            }
+
+            if (isMuted) {
+                icon.className = 'fa-solid fa-volume-xmark text-sm text-pink-400';
+            } else {
+                icon.className = 'fa-solid fa-volume-high text-sm text-pink-300';
+            }
+        }
+
+        // --- FONDO ANIMADO DE ESTRELLAS ---
+        const canvas = document.getElementById('starsCanvas');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+        const numStars = 180;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initStars();
+        }
+
+        function initStars() {
+            stars = [];
+            for (let i = 0; i < numStars; i++) {
+                stars.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 1.8 + 0.4,
+                    alpha: Math.random(),
+                    speed: Math.random() * 0.012 + 0.003,
+                    twinkleSpeed: Math.random() * 0.015 + 0.004,
+                    isPink: Math.random() > 0.65
+                });
+            }
+        }
+
+        function animateStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            stars.forEach(star => {
+                star.alpha += star.twinkleSpeed;
+                if (star.alpha > 1 || star.alpha < 0.2) {
+                    star.twinkleSpeed = -star.twinkleSpeed;
+                }
+
+                star.y -= star.speed * 8;
+                if (star.y < 0) {
+                    star.y = canvas.height;
+                    star.x = Math.random() * canvas.width;
+                }
+
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.fillStyle = star.isPink 
+                    ? `rgba(255, 182, 193, ${Math.abs(star.alpha)})` 
+                    : `rgba(255, 255, 255, ${Math.abs(star.alpha)})`;
+                ctx.fill();
+            });
+
+            requestAnimationFrame(animateStars);
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        window.onload = function() {
+            resizeCanvas();
+            animateStars();
+            runProgressBar(0, 3000); // 3 segundos primer panel
+        };
+
+        // --- BARRA DE CARGA DINÁMICA ---
+        function runProgressBar(panelNum, durationMs = 2000, callback = null) {
+            if (currentInterval) {
+                clearInterval(currentInterval);
+            }
+
+            let progressBarId, percentageTextId, loadingContainerId, buttonContainerId;
+
+            if (panelNum === 'Load') {
+                progressBarId = 'progressBarLoad';
+                percentageTextId = 'percentageTextLoad';
+                loadingContainerId = 'panelLoading';
+            } else if (panelNum === 'Connect') {
+                progressBarId = 'progressBarConnect';
+                percentageTextId = 'percentageTextConnect';
+                loadingContainerId = 'panelConnect';
+            } else {
+                progressBarId = `progressBar${panelNum}`;
+                percentageTextId = `percentageText${panelNum}`;
+                loadingContainerId = `loadingContainer${panelNum}`;
+                buttonContainerId = `buttonContainer${panelNum}`;
+            }
+
+            const progressBar = document.getElementById(progressBarId);
+            const percentageText = document.getElementById(percentageTextId);
+            const loadingContainer = document.getElementById(loadingContainerId);
+            const buttonContainer = buttonContainerId ? document.getElementById(buttonContainerId) : null;
+
+            if (!progressBar) return;
+
+            if (loadingContainer && panelNum !== 'Load' && panelNum !== 'Connect') {
+                loadingContainer.style.display = 'block';
+                loadingContainer.classList.remove('opacity-0');
+            }
+            if (buttonContainer) buttonContainer.classList.add('hidden');
+            
+            progressBar.style.width = '0%';
+            if (percentageText) percentageText.textContent = '0%';
+
+            const intervalTime = 30;
+            const step = (intervalTime / durationMs) * 100;
+            let currentProgress = 0;
+
+            currentInterval = setInterval(() => {
+                currentProgress += step;
+                
+                if (currentProgress >= 100) {
+                    currentProgress = 100;
+                    clearInterval(currentInterval);
+
+                    if (callback) {
+                        setTimeout(callback, 200);
+                        return;
+                    }
+
+                    setTimeout(() => {
+                        if (loadingContainer && panelNum !== 'Load' && panelNum !== 'Connect') {
+                            loadingContainer.classList.add('opacity-0');
+                            setTimeout(() => {
+                                loadingContainer.style.display = 'none';
+                                if (buttonContainer) buttonContainer.classList.remove('hidden');
+                            }, 300);
+                        }
+                    }, 150);
+                }
+
+                progressBar.style.width = `${currentProgress}%`;
+                if (percentageText) percentageText.textContent = `${Math.round(currentProgress)}%`;
+            }, intervalTime);
+        }
+
+        // --- INICIAR DESDE EMPEZAR CON PANTALLA "CONECTANDO A LA RED" (5 seg) ---
+        function startJourney() {
+            switchPanels(0, 'Connect');
+            runProgressBar('Connect', 5000, () => {
+                switchPanels('Connect', 1);
+            });
+        }
+
+        // --- NAVEGACIÓN Y TRANSICIÓN DE PANELES ---
+        function switchPanels(fromId, toId) {
+            const currentPanel = typeof fromId === 'number' ? document.getElementById(`panel${fromId}`) : document.getElementById(fromId.startsWith('panel') ? fromId : `panel${fromId}`);
+            const nextPanel = typeof toId === 'number' ? document.getElementById(`panel${toId}`) : document.getElementById(toId.startsWith('panel') ? toId : `panel${toId}`);
+
+            if (!currentPanel) return;
+
+            currentPanel.classList.add('panel-exit');
+
+            setTimeout(() => {
+                currentPanel.classList.add('hidden');
+                currentPanel.classList.remove('panel-exit');
+
+                if (nextPanel) {
+                    nextPanel.classList.remove('hidden');
+                    nextPanel.classList.add('panel-enter');
+                    
+                    if (typeof toId === 'number' && toId > 0 && toId <= 3) {
+                        runProgressBar(toId, 2000);
+                    }
+
+                    setTimeout(() => {
+                        nextPanel.classList.remove('panel-enter');
+                    }, 450);
+                }
+            }, 400);
+        }
+
+        // --- LÓGICA BOTÓN ESCAPAR Y CRECER ---
+        function moveNoButton() {
+            const btnNo = document.getElementById('btnNo');
+            const btnSi = document.getElementById('btnSi');
+
+            // Incrementar tamaño del botón SÍ
+            siScale += 0.25;
+            btnSi.style.transform = `scale(${siScale})`;
+
+            // Mover botón NO de forma aleatoria
+            const randomX = (Math.random() - 0.5) * 200;
+            const randomY = (Math.random() - 0.5) * 120;
+            btnNo.style.transform = `translate(${randomX}px, ${randomY}px)`;
+        }
+
+        // --- SELECCIONAR SÍ ---
+        function selectYes() {
+            switchPanels('panel4', 'panelLoading');
+            runProgressBar('Load', 2000, () => {
+                switchPanels('panelLoading', 'panelThanks');
+            });
+        }
+    </script>
+</body>
+</html>
